@@ -1,6 +1,7 @@
 const { Router } = require('express');
-const { signup, signin, getUsers } = require('../controllers/auth');
+const { signup, signin } = require('../controllers/auth');
 const authMiddleware = require('../middleware/auth');
+const { createQue } = require('../controllers/que');
 const userRouter = Router();
 
 const users = [
@@ -10,6 +11,6 @@ const users = [
 
 userRouter.post('/signup', signup)
 userRouter.post('/signin', signin)
-userRouter.get('/getuser',authMiddleware, getUsers)
+userRouter.post('/question',authMiddleware, createQue)
 
 module.exports = userRouter;

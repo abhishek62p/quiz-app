@@ -5,7 +5,7 @@ dotenv.config({ path: ".env" });
 
 const PORT = process.env.PORT || 5000;
 const DATABASE_URI = process.env.DATABASE_URI;
-const JWT_SECRET = process.env.JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const connectDB = async () => {
   try {

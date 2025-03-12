@@ -10,13 +10,13 @@ function authMiddleware(req, res, next) {
         });
     }
     const Token = authToken.split(" ")[1];
-    console.log("token is recived from headers: ", Token)
+    console.log("token is recived from headers: ", Token);
 
     try {
         const decode = jwt.verify(Token, JWT_SECRET);
         console.log("decode userid: ", decode.userId);
-        req.userId = decode.userId
-        console.log("hi", req.userId);
+        req.user = decode
+        console.log('decode',decode)
         next()
     }
     catch (error) {
