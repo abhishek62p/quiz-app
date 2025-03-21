@@ -24,7 +24,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLength: 4,
-    }
+    },
+    bookmark: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Question'
+    }]
 })
 
 const questionSchema = new mongoose.Schema({

@@ -1,4 +1,3 @@
-const { object } = require("zod");
 const { Question } = require("../models/model");
 
 const createQue = async (req, res) => {
