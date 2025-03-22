@@ -28,7 +28,11 @@ const userSchema = new mongoose.Schema({
     bookmark: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Question'
-    }]
+    }],
+    profilePicture: {
+        type: String,
+        default: ""
+    }
 })
 
 const questionSchema = new mongoose.Schema({

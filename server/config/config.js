@@ -25,5 +25,5 @@ module.exports = {
     PORT,
     DATABASE_URI,
     JWT_SECRET,
-    connectDB 
+    connectDB ,
 }

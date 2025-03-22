@@ -1,6 +1,6 @@
 const express = require('express');
 const rootRouter = require('./routes/index');
-const { PORT, connectDB } = require('./config');
+const { PORT, connectDB } = require('./config/config');
 
 const app = express();
 
