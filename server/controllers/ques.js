@@ -1,4 +1,5 @@
-const { Question } = require("../models/model");
+const {  mongoose } = require("mongoose");
+const { Question, QuizAttempt } = require("../models/model");
 
 const createQue = async (req, res) => {
     const userId = req.user.userId;
@@ -118,9 +119,72 @@ const deleteQues = async (req, res) => {
 
 }
 
+const getRandomQues = async (req, res) => {
+    const size = parseInt(req.query.size) || 5
+    if(size <= 4) {
+        return res.status(400).json({
+            msg: 'Question size must be greater than 5'
+        })
+    }
+    try {
+        const question = await Question.aggregate([{ $sample: { size } }])
+        res.status(200).json({
+            msg: 'Qusestion fetched successfully',
+            size: question.length,
+            question
+        })
+    } catch(error) {
+        return res.status(500).json({
+            msg: 'Error fetching question',
+            error: error.message
+        })
+    }
+}
+
+const submitQuiz = async (req, res) => {
+    const { totalQuestionAttempted, score } = req.body;
+    const userId = new mongoose.Types.ObjectId(req.user.userId)
+
+    if(!userId || totalQuestionAttempted === undefined || score === undefined) {
+        return res.status(400).json({
+            msg: 'UserId, totalQuestionsAttempted, and score are required'
+        })
+    }
+
+    try {
+        const attemptQuiz =  await QuizAttempt.findByIdAndUpdate({ user: userId })
+        if(!attemptQuiz) {
+            attemptQuiz.totalQuestionAttempted += totalQuestionAttempted
+            attemptQuiz.score += score
+            attemptQuiz.attemptedAt = Date.now()
+        } else {
+            attemptQuiz = new QuizAttempt({
+                user: userId,
+                totalQuestionAttempted,
+                score,
+                attemptedAt: Date.now()
+            })
+        }
+
+        await attemptQuiz.save()
+        res.status(202).json({
+            mag: 'Quiz result saved successfully',
+            attemptQuiz: attemptQuiz
+    
+        })
+    } catch(error) {
+        return res.status(500).json({
+            msg: 'Error while saving result',
+            error: error.message
+        })
+    }
+}
+
 module.exports = {
     createQue,
     updateQue,
     deleteQues,
-    getQues
+    getQues,
+    getRandomQues,
+    submitQuiz
 }

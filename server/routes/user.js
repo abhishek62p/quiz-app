@@ -1,15 +1,13 @@
 const { Router } = require('express')
 const authMiddleware = require('../middleware/auth')
-const { createQue, getQues, updateQue, deleteQues } = require('../controllers/que')
+const { updateProfilePicture, deleteProfilePicture, getUserProfile, deleteUser } = require('../controllers/user')
 const uplaod = require('../middleware/multerConfig')
-const updateProfilePicture = require('../controllers/user')
 
-const userRoutes = Router()
+const userRouter = Router()
 
-userRoutes.post('/question', authMiddleware, createQue)
-userRoutes.get('/question', authMiddleware, getQues)
-userRoutes.put('/question/update/:id',authMiddleware, updateQue)
-userRoutes.delete('/question/delete/:quesid',authMiddleware, deleteQues)
-userRoutes.post('/profile', authMiddleware, uplaod.single('profilePicture'), updateProfilePicture)
+userRouter.post('/profile/upload-picture', authMiddleware, uplaod.single('profilePicture'), updateProfilePicture)
+userRouter.delete('/profile/delete-picture', authMiddleware, deleteProfilePicture)
+userRouter.get('/profile/:id', authMiddleware, getUserProfile)
+userRouter.delete('/profile/delete-user/:id', authMiddleware, deleteUser)
 
-module.exports = userRoutes
+module.exports = userRouter

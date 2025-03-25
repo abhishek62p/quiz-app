@@ -9,11 +9,16 @@ cloudinary.config({
 
 const uploadOnCloudinary = async (localFilePath) => {
     try {
+        console.log('localpath',localFilePath);
         if(!localFilePath) return null
         const response = await cloudinary.uploader.upload(localFilePath, {
+            folder: 'profile_picture',
             resource_type: 'auto'
         })
+
         console.log('file is uploded on cloudinary',response);
+        fs.unlinkSync(localFilePath)
+        return response.secure_url
     } catch (error) {
         console.error('cloudinary upload error: ', error.message)
         if (fs.existsSync(localFilePath)) {

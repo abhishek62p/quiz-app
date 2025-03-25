@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema({
     profilePicture: {
         type: String,
         default: ""
+    },
+    quizAttempts: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'QuizAttempt'
     }
 })
 
@@ -69,10 +73,32 @@ const questionSchema = new mongoose.Schema({
     }
 })
 
+const quizAttemptSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    totalQuestionAttemted: {
+        type: Number,
+        default: 0
+    },
+    score: {
+        type: Number,
+        default: 0
+    },
+    attemptedAt: {
+        type: Date,
+        default: Date.now
+    }
+})
+
 const User = mongoose.model('User', userSchema)
 const Question = mongoose.model('Question', questionSchema)
+const QuizAttempt = mongoose.model('QuizAttempt', quizAttemptSchema)
 
 module.exports = {
     User,
-    Question
+    Question,
+    QuizAttempt
 }
