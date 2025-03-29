@@ -7,7 +7,8 @@ const rootRouter = Router();
 
 
 rootRouter.use('/auth', authRoutes);
-rootRouter.use('/user', quesRouter);
+rootRouter.use('/user', userRoutes);
+rootRouter.use('/question', quesRouter);
 rootRouter.use('/question', bookmarkRoutes);
 
 module.exports = rootRouter;

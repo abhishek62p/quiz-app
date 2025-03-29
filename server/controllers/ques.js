@@ -142,34 +142,32 @@ const getRandomQues = async (req, res) => {
 }
 
 const submitQuiz = async (req, res) => {
-    const { totalQuestionAttempted, score } = req.body;
-    const userId = new mongoose.Types.ObjectId(req.user.userId)
+    const { totalQuestionAttemted, score } = req.body;
+    const userId = req.user.userId
+    console.log(userId);
 
-    if(!userId || totalQuestionAttempted === undefined || score === undefined) {
+    if(!userId || totalQuestionAttemted === undefined || score === undefined) {
         return res.status(400).json({
             msg: 'UserId, totalQuestionsAttempted, and score are required'
         })
     }
 
     try {
-        const attemptQuiz =  await QuizAttempt.findByIdAndUpdate({ user: userId })
-        if(!attemptQuiz) {
-            attemptQuiz.totalQuestionAttempted += totalQuestionAttempted
-            attemptQuiz.score += score
-            attemptQuiz.attemptedAt = Date.now()
-        } else {
-            attemptQuiz = new QuizAttempt({
-                user: userId,
-                totalQuestionAttempted,
-                score,
-                attemptedAt: Date.now()
+        const quizStats =  await QuizAttempt.findOneAndUpdate(
+            { user: userId },
+            { $inc: { totalQuestionAttemted, score: score }},
+            { new: true, upsert: true }
+        )
+
+        if(!quizStats) {
+            return res.status(404).json({
+                msg: 'Quiz stats not found'
             })
         }
 
-        await attemptQuiz.save()
         res.status(202).json({
             mag: 'Quiz result saved successfully',
-            attemptQuiz: attemptQuiz
+            quizStats: quizStats
     
         })
     } catch(error) {
@@ -180,11 +178,30 @@ const submitQuiz = async (req, res) => {
     }
 }
 
+const getScore =  async (req, res) => {
+    userid = req.user.userId
+    if(!userid) {
+        return res.status(404).json({ msg: 'score is not found/user is not verified' })
+    }
+    try {
+        const stats = await QuizAttempt.findOne({ user: userid })
+        res.status(200).json({
+            msg: 'getting score successfully',
+            stats: stats
+        })
+    } catch(error) {
+        return res.status(500).json({
+            msg: 'Error while getting score',
+            error: error.message
+        })
+    }
+}
 module.exports = {
     createQue,
     updateQue,
     deleteQues,
     getQues,
     getRandomQues,
-    submitQuiz
+    submitQuiz,
+    getScore
 }

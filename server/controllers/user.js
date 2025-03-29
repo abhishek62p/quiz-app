@@ -21,7 +21,8 @@ const updateProfilePicture = async (req, res) => {
         }
         if (user.profilePicture) {
             //  extract public id from cloudinary url
-            const publicId = user.profilePicture.split('/').pop().split('.')[0]
+            const publicId = user.profilePicture.split('/').slice(-2).join('/').split('.')[0];
+            console.log(publicId);
             await cloudinary.uploader.destroy(publicId)
         }
 
@@ -72,14 +73,16 @@ const deleteProfilePicture = async (req, res) => {
 
 const getUserProfile = async (req, res) => {
     try {
-        const userId = mongoose.Types.ObjectId(req.user.userId)
+        const userId = new mongoose.Types.ObjectId(req.params.id)
         const user = await User.findById(userId)
+        console.log(userId);
         if (!user) {
             return res.status(404).json({
                 msg: 'User does not found'
             })
         }
 
+        console.log(user);
         res.status(200).json({
             msg: 'Getting user successfully',
             user: user
@@ -94,7 +97,7 @@ const getUserProfile = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     try {
-        const userId = mongoose.Types.ObjectId(req.user.userId)
+        const userId = mongoose.Types.ObjectId(req.params.userId)
         const user = await User.findByIdAndDelete(userId)
         if(!user) {
             return res.status(404).json({
