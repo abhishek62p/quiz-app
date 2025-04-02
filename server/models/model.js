@@ -73,10 +73,40 @@ const questionSchema = new mongoose.Schema({
     }
 })
 
+const quizSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    description: {
+        type: String,
+        trim: true
+    },
+    questions: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Question',
+    }],
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
+})
+
 const quizAttemptSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+        required: true
+    },
+    quiz: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Quizzes',
         required: true
     },
     totalQuestionAttemted: {
@@ -95,10 +125,12 @@ const quizAttemptSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema)
 const Question = mongoose.model('Question', questionSchema)
+const Quizzes = mongoose.model('Quizzes', quizSchema)
 const QuizAttempt = mongoose.model('QuizAttempt', quizAttemptSchema)
 
 module.exports = {
     User,
     Question,
+    Quizzes,
     QuizAttempt
 }
