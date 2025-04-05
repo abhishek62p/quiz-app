@@ -51,10 +51,11 @@ const getQues = async (req, res) => {
 const updateQue = async (req, res) => {
     const { questionText, options, difficulty, category } = req.body
     const userId = req.user.userId
+    const { id } = req.params
 
     try {
         const updatedQuestion = await Question.findOneAndUpdate(
-            { user: userId },
+            {  _id: id, user: userId },
             { questionText, options, difficulty, category },
             { new: true, runValidators: true }
         )

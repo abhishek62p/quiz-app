@@ -73,8 +73,8 @@ const deleteProfilePicture = async (req, res) => {
 
 const getUserProfile = async (req, res) => {
     try {
-        const userId = new mongoose.Types.ObjectId(req.params.id)
-        const user = await User.findById(userId)
+        const userId = req.user.userId
+        const user = await User.findById({_id: userId})
         console.log(userId);
         if (!user) {
             return res.status(404).json({
@@ -97,8 +97,8 @@ const getUserProfile = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     try {
-        const userId = mongoose.Types.ObjectId(req.params.userId)
-        const user = await User.findByIdAndDelete(userId)
+        const userId = req.user.userId
+        const user = await User.findByIdAndDelete({_id: userId})
         if(!user) {
             return res.status(404).json({
                 msg: 'User not found'

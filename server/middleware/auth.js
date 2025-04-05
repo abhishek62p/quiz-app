@@ -5,7 +5,7 @@ function authMiddleware(req, res, next) {
     const authToken = req.headers.authorization;
 
     if(!authToken && !authToken.startsWith("bearer")) {
-        return res.status().json({
+        return res.status(401).json({
             msg: "Authorization Token is Missing"
         });
     }
@@ -22,7 +22,8 @@ function authMiddleware(req, res, next) {
     catch (error) {
         console.log(`Token verification failed: ${error.message}`)
         return res.status(403).json({
-            msg: "Authorization failed"
+            msg: "Authorization failed",
+            error: error.message
         })
     }
 }

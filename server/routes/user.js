@@ -7,7 +7,7 @@ const userRouter = Router()
 
 userRouter.post('/profile/upload-picture', authMiddleware, uplaod.single('profilePicture'), updateProfilePicture)
 userRouter.delete('/profile/delete-picture', authMiddleware, deleteProfilePicture)
-userRouter.get('/profile/:id', authMiddleware, getUserProfile)
-userRouter.delete('/profile/delete-user/:id', authMiddleware, deleteUser)
+userRouter.get('/profile', authMiddleware, getUserProfile)
+userRouter.delete('/profile/delete-user', authMiddleware, deleteUser)
 
 module.exports = userRouter
