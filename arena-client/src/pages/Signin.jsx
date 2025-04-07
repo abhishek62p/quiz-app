@@ -29,21 +29,29 @@ export default function Signin() {
       console.log('response', response);
 
       if (response.ok) {
-        localStorage.setItem('token', data.token);
-        console.log('login successfully');
-        navigate('/');
+        saveToken(data.token)
+        localStorage.setItem('user', JSON.stringify(data.user))
+        navigate('/')
+
       } else {
         setErrorMsg(data.msg);
         setTimeout(() => setErrorMsg(''), 5000);
         console.log('data.msg', data.msg);
       }
-      console.log('data', data);
     } catch (error) {
         setErrorMsg(`server not responding: ${error.message}`)
         setTimeout(() => setErrorMsg(''), 5000)
         console.log('error msg', error.message);
     }
   };
+
+  const saveToken = (token) => {
+    const jwtData = {
+      token,
+      timestamp: new Date().getTime()
+    }
+    localStorage.setItem("jwt", JSON.stringify(jwtData))
+  }
 
   return (
     <div
@@ -90,7 +98,7 @@ export default function Signin() {
             placeholder={'enter password'}
           />
           <div className="auth-btn">
-            <Button onClick={handleSignup} data={'Sign up'} />
+            <Button onClick={handleSignup} data={'Sign in'} />
           </div>
           <div style={{ textAlign: 'center', fontSize: '14px', color: 'gray' }}>
             <p>

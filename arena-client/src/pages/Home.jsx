@@ -36,9 +36,24 @@ export default function Home() {
     fetchQuizzes();
   }, []);
 
+  const getToken = () => {
+    const jwtData = JSON.parse(localStorage.getItem("jwt"))
+    if(!jwtData) return null
+
+    const now = new Date().getTime()
+    const twelveHours = 12 * 60 * 60 * 1000
+
+    if(now - jwtData.timestamp > twelveHours) {
+      localStorage.removeItem("jwt")
+      localStorage.removeItem("user")
+      return null
+    }
+    return jwtData.token
+  }
+
   const handleStartQuiz = async (quizId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = getToken()
       const response = await fetch(`http://localhost:3000/api/v1/quiz/start/${quizId}`, {
         method: 'GET',
         headers: {
@@ -70,12 +85,12 @@ export default function Home() {
   return (
     <>
       <div className="container-m-home" style={{height: '100vh' }}>
-        <Navbar />
+        <Navbar token={getToken()}/>
         <div className="home-container">
           <div className="catalog-header">
-            <div class="arrow-container">
+            <div className="arrow-container">
               <p style={{ fontSize: '2rem', fontWeight: 'bold', color: 'rgb(255, 134, 35)' }}>Quiz Catalog</p>
-              <span class="arrow">➜</span>
+              <span className="arrow">➜</span>
             </div>
             <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#00B3AA' }}>Welcome to IQ Arena! 🎉 </p>
             <p style={{ margin: '20px 0', color: '#666' }}>

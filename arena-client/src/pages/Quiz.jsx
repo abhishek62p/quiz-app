@@ -1,4 +1,4 @@
-import { useLocation, useParams } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import QuizQuestion from "../components/QuizQuestion"
 
 export default function Quiz() {

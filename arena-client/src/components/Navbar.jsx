@@ -1,7 +1,22 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button';
+import { useEffect, useState } from 'react';
 
-export default function Navbar() {
+export default function Navbar({ token }) {
+  const navigate = useNavigate();
+  const [userpicture, setUserPicture] = useState('');
+  const [username, setUsername] = useState('');
+  const [userId, setUserId] = useState('')
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.profilePicture) {
+      setUserPicture(user.profilePicture);
+      setUsername(user.username);
+      setUserId(user._id)
+    }
+  }, []);
+
   return (
     <div className="nav-container">
       <div className="logo">
@@ -12,7 +27,7 @@ export default function Navbar() {
           <Link className="nav-links" to="/">
             Home
           </Link>
-          <Link className="nav-links" onClick={{}}>
+          <Link className="nav-links" to="/about">
             About
           </Link>
           <Link className="nav-links" to="/quiz">
@@ -23,9 +38,34 @@ export default function Navbar() {
           </Link>
         </nav>
       </div>
-      <div style={{ backgroundColor: '#FF8623', padding: '0 2.5rem' }}>
-        <Button data={'signup'} />
-      </div>
+      {token ? (
+        <div
+          onClick={() =>
+            navigate(`/profile/${username}`, { state: { userId: userId } })
+          }
+          style={{
+            cursor: 'pointer',
+            width: '4rem',
+            height: '4rem',
+            borderRadius: '50%',
+            border: '2px solid',
+            backgroundImage: userpicture ? `url(${userpicture})` : 'none',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        ></div>
+      ) : (
+        <div
+          style={{
+            cursor: 'pointer',
+            backgroundColor: '#FF8623',
+            width: '8rem',
+          }}
+        >
+          <Button data={'signup'} onClick={() => navigate('/signup')} />
+        </div>
+      )}
     </div>
   );
 }
