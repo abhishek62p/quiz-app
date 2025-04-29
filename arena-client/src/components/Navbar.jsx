@@ -6,15 +6,22 @@ export default function Navbar({ token }) {
   const navigate = useNavigate();
   const [userpicture, setUserPicture] = useState('');
   const [username, setUsername] = useState('');
-  const [userId, setUserId] = useState('')
+  const [userId, setUserId] = useState('');
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
-    if (user && user.profilePicture) {
-      setUserPicture(user.profilePicture);
+    if(!user) return
+    console.log('thsi is user id ',user);
+    console.log('this user _id',user._id);
+    setUserPicture(user.profilePicture);
       setUsername(user.username);
-      setUserId(user._id)
-    }
+      setUserId(user._id);
+    // if (user && user.profilePicture) {
+    //   setUserPicture(user.profilePicture);
+    //   setUsername(user.username);
+    //   setUserId(user._id);
+    // }
+    // console.log(userId);
   }, []);
 
   return (
@@ -56,14 +63,8 @@ export default function Navbar({ token }) {
           }}
         ></div>
       ) : (
-        <div
-          style={{
-            cursor: 'pointer',
-            backgroundColor: '#FF8623',
-            width: '8rem',
-          }}
-        >
-          <Button data={'signup'} onClick={() => navigate('/signup')} />
+        <div className="nav-signup-btn">
+          <Button data={'Signup'} onClick={() => navigate('/signup')} />
         </div>
       )}
     </div>

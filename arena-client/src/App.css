@@ -6,21 +6,33 @@
 }
 
 .button {
-  /* color: white; */
+  color: inherit;
   width: inherit;
   height: 2.5rem;
   font-size: large;
-  background-color: transparent;
+  background-color: inherit;
   border: none;
   cursor: pointer;
-  transition: all 0.5s;
 }
 
-/* .button:hover {
+.button:hover {
+  color: inherit;
+  background-color: inherit;
+}
+
+.create-qz-btn {
+  color: white;
+  background-color: #FF8623;
+  width: 10rem;
+  transition: all 0.5s ease-in-out;
+  border: 2px solid #FF8623;
+}
+
+.create-qz-btn:hover, .nav-signup-btn:hover {
   border: 2px solid #00B3AA;
   color: #00B3AA;
-  background-color: white;
-} */
+  background-color: transparent
+}
 
 .input-box {
   min-height: 3.25rem;
@@ -101,6 +113,15 @@
 .nav-links:hover {
   color: #d1c9c9;
   transform: scale(.95);
+}
+
+.nav-signup-btn {
+  color: white;
+  cursor: pointer;
+  background-color: #FF8623;
+  width: 8rem;
+  border: 2px solid #FF8623;
+  transition: all 0.5s ease-in-out;
 }
 
 .home-container {
@@ -347,21 +368,25 @@
   width: 100%;
   font-size: 1rem;
   color: #666;
-  background-color: transparent;
-  border-radius: .5rem;
-  border: 2px solid #e0dddd ;
+  background-color: #f9f9f9;
+  border-radius: .4rem;
+  border: 2px solid #eaeaea ;
   cursor: pointer;
 }
 
+.option-disable {
+  cursor: not-allowed;
+}
+
 .prev-next {
-  margin-top: 2rem;
   padding: .4rem;
   color: #333;
-  background-color: transparent;
+  border-radius: .2rem;
   border: none;
   cursor: pointer;
 }
 
+/*  styling profile section and its componenet  */
 
 .profile-container {
   height: 100vh;
@@ -380,7 +405,7 @@
   width: 20%;
   height: 80%;
   padding: 2rem;
-  border-radius: 1rem;
+  border-radius: .75rem;
 }
 
 .user-profile-picture {
@@ -388,4 +413,21 @@
   height: 7rem;
   border-radius: 50%;
   border: 1px solid #00000024;
+}
+
+
+/* stats Page and its Components style here */
+
+.stats-btn {
+  width: 9rem;
+  border: 2px solid #00B3AA;
+  color: white;
+  background-color: #00B3AA;
+  transition: all 0.5s ease-in-out;
+}
+
+.stats-btn:hover {
+  color: #00B3AA;
+  background-color: transparent;
+  border: 2px solid #00B3AA;
 }

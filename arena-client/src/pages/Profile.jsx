@@ -34,7 +34,7 @@ export default function Profile() {
           </div>
         </div>
       </div>
-      <div style={{padding:"2rem" ,height: "80%",width: "65%", backgroundColor: "white",borderRadius: "1rem" }}>
+      <div style={{padding:"2rem" ,height: "80%",width: "65%", backgroundColor: "white",borderRadius: ".75rem" }}>
         <div>
           <p>User Dashboard</p>
           <div style={{fontSize: "1rem", display: "flex", justifyContent: "space-between",border: "2px solid", padding: "1rem"}}>

@@ -6,6 +6,8 @@ import Home from './pages/Home'
 import Quiz from './pages/Quiz'
 import Contact from './pages/Contact'
 import Profile from './pages/Profile'
+import { Stats } from './pages/Stats'
+import PrivateRoute from './components/PrivateRoute'
 
 
 function App() {
@@ -16,9 +18,10 @@ function App() {
         <Route path='/' element={<Home/>} />
         <Route path='/signup' element={<Signup/>} />
         <Route path='/signin' element={<Signin/>} />
-        <Route path='/quiz/:id' element={<Quiz/>} />
+        <Route path='/quiz/:id' element={<PrivateRoute><Quiz/></PrivateRoute>} />
         <Route path='/contact' element={<Contact />}/>
-        <Route path='/profile/:username' element={<Profile />}/>
+        <Route path='/profile/:username' element={<PrivateRoute><Profile /></PrivateRoute>}/>
+        <Route path='/quiz/stats' element={<PrivateRoute><Stats /></PrivateRoute>} />
       </Routes>
     </Router>
   )

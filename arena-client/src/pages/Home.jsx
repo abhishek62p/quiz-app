@@ -41,7 +41,7 @@ export default function Home() {
     if(!jwtData) return null
 
     const now = new Date().getTime()
-    const twelveHours = 12 * 60 * 60 * 1000
+    const twelveHours = 60 * 60 * 1000
 
     if(now - jwtData.timestamp > twelveHours) {
       localStorage.removeItem("jwt")
@@ -97,7 +97,7 @@ export default function Home() {
               Get ready to challenge your mind, test your knowledge, and have fun! IQ Arena is the ultimate space for quiz lovers, where you
               can take exciting quizzes, compete with others, and sharpen your skills.
             </p>
-            <div style={{ backgroundColor: '#FF8623', width: "10rem" }}>
+            <div className='create-qz-btn' style={{ }}>
               <Button data={'Create Quiz'} />
             </div>
           </div>
